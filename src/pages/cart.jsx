@@ -1,4 +1,4 @@
-import CartItem from "../components/CartItem";
+import CartItem from "../components/cartItem";
 import { clearCart } from "../features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "../context/ThemeContext";
