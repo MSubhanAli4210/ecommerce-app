@@ -1,10 +1,10 @@
 import "./App.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import Cart from "./pages/Cart";
+import Home from "./pages/Home.jsx";
+import Cart from "./pages/cart.jsx";
 import Navbar from "./components/NavBar.jsx";
-import { useTheme } from "./context/ThemeContext";
-import ProductDetails from "./pages/productDetail";
+import { useTheme } from "./context/ThemeContext.jsx";
+import ProductDetails from "./pages/productDetail.jsx";
 
 function App() {
   const { darkMode } = useTheme();
