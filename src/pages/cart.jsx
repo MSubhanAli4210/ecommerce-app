@@ -1,12 +1,52 @@
-import CartItem from "../components/cartItem";
-import { clearCart } from "../features/cart/cartSlice";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import CartItem from "../components/cartItem";
+import { fetchCart, clearCart } from "../features/cart/cartSlice";
 import { useTheme } from "../context/ThemeContext";
+import { createOrderApi } from "../axios/api";
+import Loader from "../components/loader";
+import { useEffect } from "react";
 
 function Cart() {
   const dispatch = useDispatch();
   const { darkMode } = useTheme();
-  const { cartItems, totalQuantity, totalPrice } = useSelector((state) => state.cart);
+  const { cartItems, totalQuantity, totalPrice, loading } = useSelector(
+    (state) => state.cart
+  );
+
+  const [placing, setPlacing] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  const handlePlaceOrder = async () => {
+    try {
+      setPlacing(true);
+
+      await createOrderApi({
+        fullName: "Test User",
+        addressLine: "123 Main St",
+        city: "Lahore",
+        postalCode: "54000",
+        country: "Pakistan",
+      });
+
+      toast.success("Order placed successfully!", { richColors: true });
+      dispatch(fetchCart());
+    } catch (err) {
+      const message =
+        err?.response?.data?.message || "Failed to place order";
+      toast.error(message, { richColors: true });
+    } finally {
+      setPlacing(false);
+    }
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   if (cartItems.length === 0) {
     return (
@@ -45,12 +85,22 @@ function Cart() {
             <p className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</p>
           </div>
 
-          <button
-            onClick={() => dispatch(clearCart())}
-            className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
-          >
-            Clear Cart
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => dispatch(clearCart())}
+              className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
+            >
+              Clear Cart
+            </button>
+
+            <button
+              onClick={handlePlaceOrder}
+              disabled={placing}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:bg-gray-400"
+            >
+              {placing ? "Placing Order..." : "Place Order"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

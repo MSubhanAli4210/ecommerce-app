@@ -10,7 +10,7 @@ function ProductDetails() {
 
   const { products } = useSelector((state) => state.products);
 
-  const product = products.find((p) => p.id === Number(id));
+  const product = products.find((p) => p.id === id);
 
   if (!product) {
     return (

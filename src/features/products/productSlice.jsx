@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { getProductsApi } from "../../axios/api";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get("https://dummyjson.com/products");
-
-    return response.data.products;
+    const response = await getProductsApi();
+    return response.data.products.map((p) => ({ ...p, id: p._id }));
   },
 );
 
