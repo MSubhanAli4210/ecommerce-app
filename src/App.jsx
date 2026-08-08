@@ -10,14 +10,21 @@ import { AppLogin } from "./pages/appLogin.jsx";
 import { AppSignup } from "./pages/appSignup.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ProtectedRoute } from "./components/protectedRoutes.jsx";
+import OrderStatusListener from "./components/OrderStatusListener.jsx";
+import Orders from "./pages/order.jsx";
 
 function App() {
   const { darkMode } = useTheme();
 
   return (
-    <div className={darkMode ? "dark bg-gray-900 min-h-screen" : "bg-white min-h-screen"}>
+    <div
+      className={
+        darkMode ? "dark bg-gray-900 min-h-screen" : "bg-white min-h-screen"
+      }
+    >
       <AuthProvider>
         <Toaster richColors position="top-center" />
+        <OrderStatusListener />
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -36,6 +43,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Cart />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <ProtectedRoute>
+                  <Orders />
                 </ProtectedRoute>
               }
             />

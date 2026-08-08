@@ -37,3 +37,7 @@ export const createOrderApi = async (shippingAddress) => {
 export const getMyOrdersApi = async () => {
   return await axiosInstanceOfOrders.get("/");
 };
+
+export const cancelOrderApi = async (orderId) => {
+  return await axiosInstanceOfOrders.patch(`/${orderId}/cancel`);
+};

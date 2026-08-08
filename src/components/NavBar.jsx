@@ -27,6 +27,7 @@ function Navbar() {
           <ShoppingCart size={18} />
           ({totalQuantity})
         </NavLink>
+        <NavLink to="/orders">My Orders</NavLink>
 
         <button
           onClick={toggleTheme}
