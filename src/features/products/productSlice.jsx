@@ -4,7 +4,7 @@ import axios from "axios";
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get("https://dummyjson.com/products");
+    const response = await axios.get("https://express-ojtt.onrender.com/products");
 
     return response.data.products;
   },
